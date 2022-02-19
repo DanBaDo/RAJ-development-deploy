@@ -37,3 +37,6 @@ Now we can send our application to Heroku.
 * Press Deploy Branch.
 
 Thats all. You have your Flask application running in Internet.
+
+## Credits:
+https://codigofacilito.com/articulos/deploy-flask-heroku
