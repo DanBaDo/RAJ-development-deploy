@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e69039f0055e
+Revision ID: 86781fb0fde0
 Revises: 
-Create Date: 2022-02-19 10:43:26.516470
+Create Date: 2022-02-25 16:30:52.706665
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e69039f0055e'
+revision = '86781fb0fde0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,22 +22,23 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('last_name', sa.String(length=250), nullable=False),
+    sa.Column('id_doc', sa.String(length=12), nullable=False),
     sa.Column('email', sa.String(length=250), nullable=False),
     sa.Column('phone', sa.String(length=50), nullable=False),
     sa.Column('username', sa.String(length=250), nullable=False),
     sa.Column('password_hash', sa.String(length=250), nullable=False),
     sa.Column('status', sa.Integer(), nullable=False),
-    sa.Column('role', sa.String(length=3), nullable=False),
+    sa.Column('role_id', sa.String(length=3), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
     )
     op.create_table('company',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=250), nullable=False),
-    sa.Column('NIF', sa.String(length=15), nullable=False),
-    sa.Column('address', sa.String(length=256), nullable=True),
+    sa.Column('company_name', sa.String(length=250), nullable=False),
+    sa.Column('company_id_doc', sa.String(length=15), nullable=False),
+    sa.Column('company_address', sa.String(length=256), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.UniqueConstraint('company_name')
     )
     op.create_table('roll',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -48,6 +49,7 @@ def upgrade():
     sa.Column('key', sa.String(length=262), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=False),
     sa.Column('installed', sa.String(length=5), nullable=False),
+    sa.Column('purpose', sa.Integer(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('key')
