@@ -1,9 +1,10 @@
 from flask import jsonify
 
 ROLES = {
-    "AFT": "Affected",
-    "RPR": "Company representative",
-    "BTM": "Best man",
+    "AFFECTED": "AFT",
+    "COMPANY_REPRESENTATIVE": "RPR",
+    "BEST_MAN": "BTM",
+    "STAFF": "STF",
 }
 
 STATUS = {
@@ -19,6 +20,10 @@ TOKEN_PURPOSES = {
     "API_KEY": "API key"
 }
 
+API_KEY_PURPOSES = {
+    "APPLICATION": 0,
+    "IOT": 1
+}
 class Response:
     message = ""
     data = None
