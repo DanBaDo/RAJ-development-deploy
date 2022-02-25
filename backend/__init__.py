@@ -11,7 +11,6 @@ from backend.models import db
 
 # Configure Flask app
 app = Flask(__name__)
-CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_CONNECTION_STRING')
 MIGRATE = Migrate(app, db)
 db.init_app(app)
