@@ -11,11 +11,39 @@ WSGI provides a interface for HTTP server to talk to your app. Gunicorn can prov
 ```bash
 pip install gunicorn
 ```
+or, in case you are using `pipenv`:
+```bash
+pipenv install gunicorn
+```
+
+## If you project includes a frontend or static files.
+
+### Install Whitenoise 
+```bash
+pip install whitenoise
+```
+or, in case you are using `pipenv`:
+```bash
+pipenv install whitenoise
+```
+Then, configure Whitenoise in your Flask application:
+```Python
+from whitenoise import WhiteNoise
+app.wsgi_app = WhiteNoise(app.wsgi_app, root="static/", index_file = True)
+```
+You only needs `index_file = True` parameter if you what Whitenoise to serves `index.html` files automatically. For example if you provides a frontend trough Flask.
+
+### Copy static files
+Create a `/static/` folder en your root project folder and copy static files there.
 
 ## Update requirements.txt
 Ensure your [requirements.txt](requirements.txt) file include all necessary pip packages, including gunicorn.
 ```bash
 pip freeze > requirements.txt
+```
+or, in case you are using `pipenv`:
+```bash
+pipenv run pip3 freeze > requirements.txt
 ```
 
 ## Create a Heroku Procfile
