@@ -1,4 +1,3 @@
-from urllib import response
 from flask import request
 from flask_jwt_extended import decode_token , create_access_token, create_refresh_token, jwt_required, current_user
 from backend.models import API_KEY_PURPOSES
@@ -53,6 +52,30 @@ def new_api_key():
             "newApiKey": new_key.serialize(),
             "apiKeys": [key.serialize() for key in current_keys]
         }
+        return resp.json(), 200
+    except Exception as err:
+        resp.message = "Internal server error: %s" % err
+        return resp.json(), 500
+
+def api_binding(api_key):
+    try:
+        resp = Response()
+        try:
+            token_data = decode_token(api_key)
+        except Exception as err:
+            resp.message = "Error decoding token: %s" % err
+            return resp.json(), 400
+        if token_data["purpose"] != TOKEN_PURPOSES["API_KEY"]:
+            resp.message = "Invalid api key type provided"
+            return resp.json(), 400
+        key = API_key.query.filter_by( key = api_key, installed = 0 ).first()
+        if not key:
+            resp.message = "Invalid api key provided"
+            return resp.json(), 400
+        key.installed = 1
+        db.session.commit()
+        resp.message = "Bind completed succesfully"
+        resp.data = {"token": create_access_token(identity=key.company)}
         return resp.json(), 200
     except Exception as err:
         resp.message = "Internal server error: %s" % err
