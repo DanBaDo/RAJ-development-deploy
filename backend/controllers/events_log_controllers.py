@@ -94,8 +94,14 @@ LOGS_MOCKUP = [
 
 PAGE_SIZE = 5
 
+logs = []
+
+for idx, item in enumerate(LOGS_MOCKUP):
+  item["key"] = idx
+  logs.append(item)
+
 def get_events(page):
     return jsonify({
-      "data": LOGS_MOCKUP[page*PAGE_SIZE:(page+1)*PAGE_SIZE],
+      "data": [item in logs[page*PAGE_SIZE:(page+1)*PAGE_SIZE]],
       "pages": ceil(len(LOGS_MOCKUP)/PAGE_SIZE)
     }), 200
